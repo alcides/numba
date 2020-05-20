@@ -2756,7 +2756,7 @@ class ArrayAnalysis(object):
         # of same size
         std_idx_arrs = stencil_func.options.get("standard_indexing", ())
         kernel_arg_names = stencil_func.kernel_ir.arg_names
-        if isinstance(std_idx_arrs, str):
+        if isinstance(std_idx_arrs, str) or isinstance(std_idx_arrs, ir.Var):
             std_idx_arrs = (std_idx_arrs,)
         rel_idx_arrs = []
         assert len(args) > 0 and len(args) == len(kernel_arg_names)

@@ -419,8 +419,15 @@ class StencilPass(object):
         in_arg_names = [x.name for x in in_args]
 
         if "standard_indexing" in stencil_func.options:
-            for x in stencil_func.options["standard_indexing"]:
+            standard_indexing_arr = stencil_func.options["standard_indexing"]
+            if isinstance(standard_indexing_arr, str) or isinstance(standard_indexing_arr, ir.Var):
+                standard_indexing_arr = (standard_indexing_arr,)
+            for x in standard_indexing_arr:
                 if x not in arg_to_arr_dict:
+                    print(x, arg_to_arr_dict)
+                    for k in arg_to_arr_dict:
+                        print("a:", k, arg_to_arr_dict[k])
+                    print(x, x.name, x.versioned_names, x.scope, dir(x))
                     raise ValueError("Standard indexing requested for an array " \
                         "name not present in the stencil kernel definition.")
             standard_indexed = [arg_to_arr_dict[x] for x in
